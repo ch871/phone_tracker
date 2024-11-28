@@ -9,12 +9,12 @@ def split_data_to_models(data: json):
                       model=device["model"],
                       os=device["os"],
                       id=device["id"]) for device in data["devices"]]
-    print(data["devices"])
+    print(data["interaction"]["method"])
     locations = [Location(latitude=device["location"]["latitude"],
                           longitude=device["location"]["longitude"],
                           altitude_meters=device["location"]["altitude_meters"],
                           accuracy_meters=device["location"]["accuracy_meters"]) for device in data["devices"]]
-    interaction = [Interaction(**data["interaction"]) for interaction in data]
+    interaction = Interaction(**data["interaction"])
     return {"devices": devices,
             "locations": locations,
             "interaction": interaction}
