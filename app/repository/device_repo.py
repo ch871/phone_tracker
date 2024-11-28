@@ -20,15 +20,15 @@ def create_device_repo(device: Device, location: Location):
             return d,l
         """
         params = {
-            device.name,
-            device.os,
-            device.id,
-            device.model,
-            device.brand,
-            location.latitude,
-            location.longitude,
-            location.accuracy_meters,
-            location.altitude_meters
+            "name": device.name,
+            "os": device.os,
+            "id": device.id,
+            "model": device.model,
+            "brand": device.brand,
+            "latitude": location.latitude,
+            "longitude": location.longitude,
+            "accuracy_meters": location.accuracy_meters,
+            "altitude_meters": location.altitude_meters
         }
         res = session.run(query, params).single()
         print(res)
