@@ -29,9 +29,9 @@ def get_connection_by_method(method):
         return jsonify({}), 404
 
 
-@phone_blueprint.route("/relation_stronger_then/<int:streng_num>", methods=['GET'])
-def get_connection_stronger_then(streng_num):
-    res = get_connection_stronger_then_repo(streng_num)
+@phone_blueprint.route("/relation_stronger_then", methods=['POST'])
+def get_connection_stronger_then():
+    res = get_connection_stronger_then_repo(request.json["streng_num"])
     try:
         return jsonify({"res": res}), 200
     except Exception as e:

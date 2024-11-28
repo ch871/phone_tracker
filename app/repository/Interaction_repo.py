@@ -33,7 +33,15 @@ def create_interaction_repo(interaction: Interaction):
 def get_connection_by_method_repo(method):
     with driver.session() as session:
         query = """
-        match path =(d:Device) -[:CONNECTED{method: $method}]->(d1:Device) where not d = d1 return d,d1,length(path) as len
+        MATCH (start:Device)
+        MATCH (end:Device)
+        WHERE start <> end
+        MATCH path = shortestPath((start)-[:CONNECTED*]->(end))
+        WHERE ALL(r IN relationships(path) WHERE r.method = $method)
+        WITH path, length(path) as pathLength
+        ORDER BY pathLength DESC
+        LIMIT 1
+        RETURN path
         """
         params = {
             "method": method
@@ -85,7 +93,7 @@ def get_last_connection_repo(device_id):
     with driver.session() as session:
         query = """
         match(d:Device{id: $device_id}) -[rel:CONNECTED]-> (d1:Device) 
-        return d,d1 order by rel.timestamp  asc limit 1
+        return d1 order by rel.timestamp  desc limit 1
         """
         params = {
             "device_id": device_id
