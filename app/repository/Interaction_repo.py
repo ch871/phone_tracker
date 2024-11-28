@@ -1,7 +1,6 @@
 from returns.maybe import Maybe
 from app.db.database import driver
 from app.db.models import Interaction
-import toolz as t
 
 
 def create_interaction_repo(interaction: Interaction):

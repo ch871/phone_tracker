@@ -31,6 +31,5 @@ def create_device_repo(device: Device, location: Location):
             "altitude_meters": location.altitude_meters
         }
         res = session.run(query, params).single()
-        print(res)
         return (Maybe.from_optional(res.get('d'))
                 .map(lambda d: dict(d)))

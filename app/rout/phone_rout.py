@@ -1,6 +1,7 @@
 from flask import Blueprint, request, jsonify
 from app.repository.Interaction_repo import create_interaction_repo, get_connection_by_method_repo, \
-    get_connection_stronger_then_repo, get_sum_connections_to_repo, check_if_too_connected_repo
+    get_connection_stronger_then_repo, get_sum_connections_to_repo, check_if_too_connected_repo, \
+    get_last_connection_repo
 from app.repository.device_repo import create_device_repo
 from app.service.split_data import split_data_to_models
 
@@ -28,7 +29,7 @@ def get_connection_by_method(method):
         return jsonify({}), 404
 
 
-@phone_blueprint.route("/relation_stronger_then/<int: streng_num>", methods=['GET'])
+@phone_blueprint.route("/relation_stronger_then/<int:streng_num>", methods=['GET'])
 def get_connection_stronger_then(streng_num):
     res = get_connection_stronger_then_repo(streng_num)
     try:
